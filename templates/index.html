@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Academic Performance Clustering</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <header class="hero">
+    <div>
+      <span class="eyebrow">MACHINE LEARNING • CLUSTERING</span>
+      <h1>Student Academic<br><span>Performance Clustering</span></h1>
+      <p>Discover groups of students with similar academic characteristics using unsupervised learning.</p>
+    </div>
+    <div class="hero-badge"><div class="pulse"></div><span>ML ENGINE READY</span></div>
+  </header>
+
+  <main>
+    <section class="control-card">
+      <div class="section-title"><span>01</span><div><h2>Data & Model</h2><p>Load student records and choose a clustering method.</p></div></div>
+      <div class="controls-grid">
+        <div class="control">
+          <label>Student Dataset</label>
+          <div class="upload-row">
+            <button id="sampleBtn" class="btn primary">Use Sample Data</button>
+            <label class="btn secondary file-btn">Upload CSV<input id="fileInput" type="file" accept=".csv"></label>
+          </div>
+          <small id="fileStatus">No dataset selected.</small>
+        </div>
+        <div class="control">
+          <label>Clustering Algorithm</label>
+          <select id="algorithm">
+            <option value="kmeans">K-Means</option>
+            <option value="hierarchical">Hierarchical (Agglomerative)</option>
+            <option value="dbscan">DBSCAN</option>
+          </select>
+        </div>
+        <div class="control" id="clusterControl">
+          <label>Number of Clusters <b id="kValue">3</b></label>
+          <input id="clusters" type="range" min="2" max="8" value="3">
+        </div>
+        <div class="control action">
+          <label>&nbsp;</label>
+          <button id="runBtn" class="btn run">Run Clustering ↗</button>
+        </div>
+      </div>
+      <div id="error" class="error"></div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card"><span>Total Students</span><strong id="total">—</strong><small>records analyzed</small></div>
+      <div class="stat-card"><span>Groups Found</span><strong id="groups">—</strong><small>student clusters</small></div>
+      <div class="stat-card"><span>Silhouette Score</span><strong id="silhouette">—</strong><small>higher generally means better separation</small></div>
+      <div class="stat-card"><span>Davies-Bouldin</span><strong id="db">—</strong><small>lower generally indicates tighter groups</small></div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="panel chart-panel">
+        <div class="panel-head"><div><span class="tag">PCA VISUALIZATION</span><h3>Student Groups</h3></div><button id="downloadBtn" class="icon-btn">↓ CSV</button></div>
+        <canvas id="scatter" width="850" height="470"></canvas>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><span class="tag">CLUSTER PROFILE</span><h3>Group Summary</h3></div></div>
+        <div id="summaryCards" class="summary-list"><div class="empty">Run clustering to see group profiles.</div></div>
+      </div>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-head">
+        <div><span class="tag">STUDENT ASSIGNMENTS</span><h3>Clustered Students</h3></div>
+        <input id="search" class="search" placeholder="Search student...">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Attendance</th><th>Study Hrs</th><th>Assignment</th><th>Midterm</th><th>Final</th><th>Cluster</th></tr></thead>
+          <tbody id="studentTable"><tr><td colspan="8" class="empty">Load sample data or upload a CSV.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="info-strip">
+      <div><b>How it works</b><span>Standardize academic features → apply clustering → reduce dimensions with PCA → visualize student groups.</span></div>
+      <div><b>Features used</b><span>Attendance • Study Hours • Assignment Score • Midterm Score • Final Score</span></div>
+    </section>
+  </main>
+  <footer>Student Academic Performance Clustering • Machine Learning Project</footer>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
